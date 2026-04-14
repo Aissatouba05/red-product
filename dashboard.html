@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=dashboard" />
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="bg-gray-100">
+
+  <!-- ✅ Checkbox en PREMIER — tous les éléments suivants sont ses frères directs -->
+  <input type="checkbox" id="sidebar-toggle">
+
+  <!-- ✅ Frère direct #1 : bouton hamburger -->
+  <label for="sidebar-toggle" class="hamburger-btn">
+    <i class="fa-solid fa-bars"></i>
+  </label>
+
+  <!-- ✅ Frère direct #2 : overlay -->
+  <div class="sidebar-overlay" onclick="document.getElementById('sidebar-toggle').checked = false"></div>
+
+  <!-- ✅ Frère direct #3 : sidebar  →  le sélecteur ~ fonctionne maintenant -->
+  <aside class="fixed">
+    <div class="bg-[url('images/bg1.jpeg')] bg-cover bg-center w-[270px] relative h-[100vh]">
+      <div class="w-[270px] h-[100vh] inset-0 bg-black/60">
+
+        <div class="flex items-center gap-3 justify-center py-4">
+          <i class="fa-regular fa-bookmark text-white text-2xl"></i>
+          <span class="font-bold text-white text-xl tracking-wide">RED PRODUCT</span>
+        </div>
+
+        <p class="text-sm text-white p-4">Principal</p>
+
+        <div class="px-5 flex gap-3 bg-gray-100">
+          <span class="material-symbols-outlined text-black-500 text-3xl font-bold">dashboard</span>
+          <a href="dashboard.html" class="text-black-500 py-1 font-bold">Dashboard</a>
+        </div>
+
+        <div class="px-6 py-5 flex gap-3">
+          <i class="fa-solid fa-desktop text-white text-xl"></i>
+          <a href="hotel.html" class="text-white">Liste des hôtels</a>
+        </div>
+
+      </div>
+    </div>
+  </aside>
+
+  <!-- ✅ Frère direct #4 : header -->
+  <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm">
+    <h1 class="font-bold text-xl">Dashboard</h1>
+    <div class="flex gap-4 items-center">
+      <div class="relative">
+        <input type="text" name="search" id="search" placeholder="Rechercher"
+          class="pl-10 pr-2 py-1 border border-gray-300 rounded-2xl">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-sm"></i>
+      </div>
+      <i class="fa-regular fa-bell text-xl"></i>
+      <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top">
+      <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
+    </div>
+  </header>
+
+  <!-- Sections du contenu -->
+  <section class="ml-[270px] pt-14">
+    <div class="bg-white h-18 px-6 p-5">
+      <h1 class="text-2xl text-gray-600">Bienvenue sur RED PRODUCT</h1>
+      <p class="text-sm text-gray-600">Lorem ipsum dolor sit, amet consectetur.</p>
+    </div>
+  </section>
+
+  <section class="ml-[270px]">
+    <div class="grid grid-cols-3 gap-6 p-8 mb-[50px]">
+
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+        <div class="bg-purple-400 w-11 h-11 rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-envelope-open text-white text-sm"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">125 </span>Formulaires</p>
+          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+        <div class="bg-green-300 w-11 h-11 rounded-full flex items-center justify-center">
+          <h1 class="text-white text-sm font-bold">P</h1>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">40 </span>Messages</p>
+          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+        <div class="bg-orange-300 w-11 h-11 rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-user-group text-white text-sm"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">600 </span>Utilisateurs</p>
+          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+        <div class="bg-red-500 w-11 h-11 rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-envelope-open text-white text-sm"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">25 </span>E-mails</p>
+          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+        <div class="bg-violet-500 w-11 h-11 rounded-full flex items-center justify-center">
+          <h1 class="text-white text-sm font-bold">P</h1>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">40 </span>Hôtels</p>
+          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+        <div class="bg-blue-700 w-11 h-11 rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-user-group text-white text-sm"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">02 </span>Entités</p>
+          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

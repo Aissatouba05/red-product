@@ -1,0 +1,96 @@
+/* ════════════════════════════
+   HAMBURGER & OVERLAY
+════════════════════════════ */
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 16px;
+  z-index: 100;
+  background: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+#sidebar-toggle {
+  display: none;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 60;
+}
+
+/* ════════════════════════════
+   TABLETTE  (< 1024px)
+════════════════════════════ */
+@media (max-width: 1024px) {
+  section .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  section .grid > div {
+    width: 100%;
+  }
+}
+
+/* ════════════════════════════
+   MOBILE  (< 768px)
+════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Sidebar cachée par défaut */
+  aside {
+    transform: translateX(-270px);
+    transition: transform 0.3s ease;
+    z-index: 70;
+  }
+
+  /* Sidebar visible quand checkbox cochée */
+  #sidebar-toggle:checked ~ aside {
+    transform: translateX(0);
+  }
+
+  /* Overlay visible quand checkbox cochée */
+  #sidebar-toggle:checked ~ .sidebar-overlay {
+    display: block;
+  }
+
+  /* Icône hamburger → croix quand ouvert */
+  #sidebar-toggle:checked ~ label .fa-bars::before {
+    content: "\f00d";
+  }
+
+  /* Afficher le bouton hamburger */
+  .hamburger-btn {
+    display: block;
+  }
+
+  /* Header pleine largeur sur mobile */
+  header {
+    left: 0 !important;
+    width: 100vw !important;
+    padding-left: 56px;
+  }
+
+  /* Sections sans marge gauche sur mobile */
+  section {
+    margin-left: 0 !important;
+  }
+
+  section .grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  section .grid > div {
+    width: 100%;
+  }
+}
