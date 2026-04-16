@@ -7,54 +7,81 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=dashboard" />
-
+ <link rel="stylesheet" href="dashboard.css">
 </head>
 <body class="bg-gray-100">
-<input type="checkbox" id="menu-toggle" style="display:none">
-<div class="flex">
+  <input type="checkbox" id="sidebar-toggle">
+
+  
+  <label for="sidebar-toggle" class="hamburger-btn">
+    <i class="fa-solid fa-bars"></i>
+  </label>
+
+  
+  <div class="sidebar-overlay" onclick="document.getElementById('sidebar-toggle').checked = false"></div>
+
+  <!--  : sidebar  →  le sélecteur ~ fonctionne maintenant -->
   <aside class="fixed">
     <div class="bg-[url('images/bg1.jpeg')] bg-cover bg-center w-[270px] relative h-[100vh]">
       <div class="w-[270px] h-[100vh] inset-0 bg-black/60">
+
         <div class="flex items-center gap-3 justify-center py-4">
           <i class="fa-regular fa-bookmark text-white text-2xl"></i>
           <span class="font-bold text-white text-xl tracking-wide">RED PRODUCT</span>
         </div>
-        <div class="mb-1">
-          <p class="text-sm text-white p-4">Principal</p>
-          <div class="px-5 flex gap-3">
-            <span class="material-symbols-outlined text-white text-3xl">dashboard</span>
-            <a href="dashboard.html" class="text-white py-1">Dashboard</a>
-          </div>
-          <div class="px-6 py-1 flex gap-3 bg-gray-100 mt-3">
-            <i class="fa-solid fa-desktop text-black-200 text-xl"></i>
-            <p class="text-black-200 font-bold">Liste des hôtels</p>
+
+        <p class="text-sm text-white p-4">Principal</p>
+
+        <div class="px-5 flex gap-3 ">
+          <span class="material-symbols-outlined text-white text-2xl ">dashboard</span>
+          <a href="dashboard.html" class=" py-1  text-white">Dashboard</a>
+        </div>
+
+  
+        <div class="flex gap-3 bg-gray-100 px-2 py-2 mt-4">
+          <div class="ml-3">
+          <i class="fa-solid fa-desktop  text-black-500 text-xl font-bold"></i>
+          <a href="hotel.html" class="text-black-500 font-bold">Liste des hôtels</a>
           </div>
         </div>
+
+
+        <div class="flex gap-2 p-8 mt-[110%]  border-t-[1px] border-gray-500">
+            <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top">
+          <div>
+             <h class="text-white">Mouhamed Badiane</h1>
+            <div class="flex gap-2 p-2">
+               <div class="bg-green-500 rounded-full w-2 h-2 mt-2 "></div>
+                 <p class="text-gray-400"> En ligne</p> 
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </aside>
 
-  <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm">
-
-<label for="menu-toggle" class="burger hidden">
-  <i class="fas fa-bars text-xl cursor-pointer"></i>
-</label>
-
-    <h1 class="font-bold text-xl">Liste des hôtels</h1>
-    <div class="flex gap-4">
-      <div class="relative">
-        <input type="text" placeholder="Rechercher" class="pl-10 pr-2 py-1 border border-gray-300 rounded-2xl">
-        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-sm"></i>
+  <!-- ✅ Frère direct #4 : header -->
+   <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm" id="header1">
+    <h1 class="font-bold text-xl" id="dashboard">Dashboard</h1>
+    <div class="flex gap-4 items-center" id="input" >
+      <div class="relative" id="input">
+        <input type="text" name="search" id="search" placeholder="Rechercher"
+          class="pl-10 pr-2 py-1 border border-gray-300 rounded-2xl">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-sm" id="icone"></i>
       </div>
-      <i class="fa-regular fa-bell text-xl"></i>
-      <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top">
-      <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
+          <div id="groupe" class="flex gap-2" id="groupe">
+            <i class="fa-regular fa-bell text-xl"></i>
+            <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top" id="profile">
+            <a href="connexion.html"> <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
+          </div>
     </div>
   </header>
-</div>
 
-<div class="ml-[270px] pt-10">
-  <div class="bg-white h-20 p-7 flex justify-between">
+
+<div class="ml-[270px] pt-10" id="lorem">
+  <div class="bg-white h-20 p-7 flex justify-between"  id="Ajouterhotel">
     <h1 class="text-2xl">Hôtels <span class="text-gray-300 text-2xl">8</span></h1>
     <button id="openModal" class="border rounded-xl px-5 p-5 flex items-center justify-center gap-2 text-sm">
       + Ajouter un nouveau hôtel
@@ -68,94 +95,95 @@
 
     <!-- liste des hotel -->
 
-<div class="ml-[280px] pt-10">
-<div class="p-6 flex justify-center">
-  <div style="display: grid; grid-template-columns: repeat(4, 220px); grid-template-rows: repeat(2, auto); gap: 3;">
+<div class="ml-[280px] pt-3"   >
+<div class="p-2 flex justify-center">
+ <div class="grid grid-cols-4 gap-4 max-w-6xl mx-auto"  id="hotel">
+
 
     <!-- Card 1 -->
-    <div class="bg-white rounded-2xl shadow-md w-[230px] overflow-hidden">
-      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[160px] object-cover object-center">
-      <div class="p-3 flex flex-col gap-1">
+    <div class="bg-white rounded-2xl shadow-md w-[240px] h-[230px]  overflow-hidden">
+      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[150px] object-cover object-center">
+      <div class="p-2 flex flex-col gap-1">
+         <p class="text-red-700 text-[12px]">Bld Martin Luther King, Dakar</p>
         <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
-        <p class="text-gray-400 text-xs">Bld Martin Luther King, Dakar</p>
-        <p class="text-red-500 font-semibold text-sm">25 000 FCFA / nuit</p>
+        <p class="text-black-500 font-semibold text-[10px]">25 000 XOF par nuit</p>
       </div>
     </div>
     
 
 
-     <div class="bg-white rounded-2xl shadow-md w-[230px] overflow-hidden  ">
-      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[160px] object-cover object-center">
-      <div class="p-3 flex flex-col gap-1 ">
+     <div class="bg-white rounded-2xl shadow-md w-[240px] h-[230px] overflow-hidden  ">
+      <img src="images/hotel2.jpeg" alt="hotel" class="w-full h-[150px] object-cover object-center">
+      <div class="p-2 flex flex-col gap-1 ">
+         <p class="text-red-700 text-[12px]">Bld Martin Luther King, Dakar</p>
         <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
-        <p class="text-gray-400 text-xs">Bld Martin Luther King, Dakar</p>
-        <p class="text-red-500 font-semibold text-sm">25 000 FCFA / nuit</p>
+        <p class="text-black-500 font-semibold text-[10px]">25 000 XOF par nuit</p>
       </div>
     </div>
 
 
 
-     <div class="bg-white rounded-2xl shadow-md w-[230px] overflow-hidden">
-      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[160px] object-cover object-center">
-      <div class="p-3 flex flex-col gap-1">
+     <div class="bg-white rounded-2xl shadow-md w-[240px] h-[230px] overflow-hidden">
+      <img src="images/hotel9.jpeg" alt="hotel" class="w-full h-[150px] object-cover object-center">
+      <div class="p-2 flex flex-col gap-1">
+         <p class="text-red-700 text-[12px]">Bld Martin Luther King, Dakar</p>
         <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
-        <p class="text-gray-400 text-xs">Bld Martin Luther King, Dakar</p>
-        <p class="text-red-500 font-semibold text-sm">25 000 FCFA / nuit</p>
+        <p class="text-black-500 font-semibold text-[10px]">25 000 XOF par nuit</p>
       </div>
     </div>
 
     
-     <div class="bg-white rounded-2xl shadow-md w-[230px] overflow-hidden">
-      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[160px] object-cover object-center">
-      <div class="p-3 flex flex-col gap-1">
+     <div class="bg-white rounded-2xl shadow-md w-[240px] h-[230px] overflow-hidden">
+      <img src="images/hotel4.jpeg" alt="hotel" class="w-full h-[150px] object-cover object-center">
+      <div class="p-2 flex flex-col gap-1">
+         <p class="text-red-700 text-[12px]">Bld Martin Luther King, Dakar</p>
         <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
-        <p class="text-gray-400 text-xs">Bld Martin Luther King, Dakar</p>
-        <p class="text-red-500 font-semibold text-sm">25 000 FCFA / nuit</p>
-      </div>
-    </div>
-
-
-    
-     <div class="bg-white rounded-2xl shadow-md w-[230px] overflow-hidden">
-      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[160px] object-cover object-center">
-      <div class="p-3 flex flex-col gap-1">
-        <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
-        <p class="text-gray-400 text-xs">Bld Martin Luther King, Dakar</p>
-        <p class="text-red-500 font-semibold text-sm">25 000 FCFA / nuit</p>
-      </div>
-    </div>
-
-
-
-    
-     <div class="bg-white rounded-2xl shadow-md w-[230px] overflow-hidden">
-      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[160px] object-cover object-center">
-      <div class="p-3 flex flex-col gap-1">
-        <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
-        <p class="text-gray-400 text-xs">Bld Martin Luther King, Dakar</p>
-        <p class="text-red-500 font-semibold text-sm">25 000 FCFA / nuit</p>
+        <p class="text-black-500 font-semibold text-[10px]">25 000 XOF par nuit</p>
       </div>
     </div>
 
 
     
-     <div class="bg-white rounded-2xl shadow-md w-[230px] overflow-hidden">
-      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[160px] object-cover object-center">
-      <div class="p-3 flex flex-col gap-1">
+     <div class="bg-white rounded-2xl shadow-md w-[240px] h-[230px] overflow-hidden">
+      <img src="images/hotel5.jpeg" alt="hotel" class="w-full h-[150px] object-cover object-center">
+   <div class="p-2 flex flex-col gap-1">
+         <p class="text-red-700 text-[12px]">Bld Martin Luther King, Dakar</p>
         <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
-        <p class="text-gray-400 text-xs">Bld Martin Luther King, Dakar</p>
-        <p class="text-red-500 font-semibold text-sm">25 000 FCFA / nuit</p>
+        <p class="text-black-500 font-semibold text-[10px]">25 000 XOF par nuit</p>
+      </div>
+    </div>
+
+
+
+    
+     <div class="bg-white rounded-2xl shadow-md w-[240px] h-[230px] overflow-hidden">
+      <img src="images/hotel6.jpeg" alt="hotel" class="w-full h-[150px] object-cover object-center">
+      <div class="p-2 flex flex-col gap-1">
+         <p class="text-red-700 text-[12px]">Bld Martin Luther King, Dakar</p>
+        <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
+        <p class="text-black-500 font-semibold text-[10px]">25 000 XOF par nuit</p>
       </div>
     </div>
 
 
     
-     <div class="bg-white rounded-2xl shadow-md w-[230px] overflow-hidden">
-      <img src="images/hotel1.jpeg" alt="hotel" class="w-full h-[160px] object-cover object-center">
-      <div class="p-3 flex flex-col gap-1">
+     <div class="bg-white rounded-2xl shadow-md w-[240px] h-[230px] overflow-hidden">
+      <img src="images/hotel7.jpeg" alt="hotel" class="w-full h-[150px] object-cover object-center">
+      <div class="p-2 flex flex-col gap-1">
+         <p class="text-red-700 text-[12px]">Bld Martin Luther King, Dakar</p>
         <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
-        <p class="text-gray-400 text-xs">Bld Martin Luther King, Dakar</p>
-        <p class="text-red-500 font-semibold text-sm">25 000 FCFA / nuit</p>
+        <p class="text-black-500 font-semibold text-[10px]">25 000 XOF par nuit</p>
+      </div>
+    </div>
+
+
+    
+     <div class="bg-white rounded-2xl shadow-md w-[240px] h-[230px] overflow-hidden">
+      <img src="images/hotel8.jpeg" alt="hotel" class="w-full h-[150px] object-cover object-center">
+      <div class="p-2 flex flex-col gap-1">
+         <p class="text-red-700 text-[12px]">Bld Martin Luther King, Dakar</p>
+        <h2 class="font-bold text-base">Hôtel Terrou-bi</h2>
+        <p class="text-black-500 font-semibold text-[10px]">25 000 XOF par nuit</p>
       </div>
     </div>
 
@@ -187,7 +215,7 @@
         <label>Adresse</label>
         <input type="text" placeholder="Less listes du salum, Mar lodj" class="border w-64 p-1 rounded-xl">
 
-        <label>Numero de telephone</label>
+        <label>Numero</label>
         <input type="text" placeholder="+221 777 77 77" class="border w-64 p-1 rounded-xl">
 
         <label>Devise</label>
@@ -205,7 +233,7 @@
       <input type="file" class="border w-full py-6 rounded-xl">
     </div>
 
-    <div class="ml-[79%] mt-2">
+    <div class="ml-[79%] mt-2" id="enrgistrer">
       <button class="p-2 px-5 bg-gray-600 text-white rounded-xl">Enregistrer</button>
     </div>
 

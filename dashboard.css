@@ -1,17 +1,16 @@
-/* ════════════════════════════
-   HAMBURGER & OVERLAY
-════════════════════════════ */
+/* ════════════════════════════════════════════
+   HAMBURGER BUTTON & OVERLAY
+   (commun aux deux pages)
+════════════════════════════════════════════ */
 .hamburger-btn {
   display: none;
   position: fixed;
-  top: 10px;
-  left: 16px;
+  top: 22px;
+  left: 6px;
   z-index: 100;
-  background: white;
   border: none;
-  padding: 8px 10px;
+  padding: 4px 8px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   font-size: 1.2rem;
 }
@@ -24,14 +23,37 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+   background:rgba(0, 0, 0, 0.5);
   z-index: 60;
-}
+  }
 
-/* ════════════════════════════
+   /* DESTOCK  (< 1280px) */
+   @media (max-width: 1280px ){
+     section .grid > div {
+    width: 100%;
+  }
+
+  /* Hôtels : grille 4 → 2 colonnes */
+  #hotel {
+    grid-template-columns: repeat(2, 2fr);
+  }
+
+  #hotel > div {
+    width: 100%;
+  }
+   #hotel {
+    width: 150%;
+
+   }
+
+   }
+
+/* ════════════════════════════════════════════
    TABLETTE  (< 1024px)
-════════════════════════════ */
+════════════════════════════════════════════ */
 @media (max-width: 1024px) {
+
+  /* Dashboard : grille 3 → 2 colonnes */
   section .grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -39,52 +61,102 @@
   section .grid > div {
     width: 100%;
   }
+
+  /* Hôtels : grille 4 → 2 colonnes */
+  #hotel {
+    grid-template-columns: repeat(2, 2fr);
+  }
+
+  #hotel > div {
+    width: 100%;
+  }
 }
 
-/* ════════════════════════════
+
+/* ════════════════════════════════════════════
    MOBILE  (< 768px)
-════════════════════════════ */
+════════════════════════════════════════════ */
 @media (max-width: 768px) {
 
-  /* Sidebar cachée par défaut */
+  /* ── Sidebar ── */
   aside {
     transform: translateX(-270px);
     transition: transform 0.3s ease;
     z-index: 70;
+   margin-top: -12%;
   }
 
-  /* Sidebar visible quand checkbox cochée */
   #sidebar-toggle:checked ~ aside {
     transform: translateX(0);
   }
 
-  /* Overlay visible quand checkbox cochée */
   #sidebar-toggle:checked ~ .sidebar-overlay {
     display: block;
   }
 
-  /* Icône hamburger → croix quand ouvert */
   #sidebar-toggle:checked ~ label .fa-bars::before {
     content: "\f00d";
   }
 
-  /* Afficher le bouton hamburger */
   .hamburger-btn {
     display: block;
   }
 
-  /* Header pleine largeur sur mobile */
-  header {
+  /* ── Header (dashboard.html → #header) ── */
+  #header {
     left: 0 !important;
     width: 100vw !important;
+    height: 80px;
     padding-left: 56px;
   }
 
-  /* Sections sans marge gauche sur mobile */
+  /* ── Header (hotel.html → #header1) ── */
+  #header1 {
+    left: 0 !important;
+    width: 100vw !important;
+    height: 80px;
+    padding-left: 56px;
+  }
+
+  /* ── Titre Dashboard (commun) ── */
+  #dashboard {
+    font-size: 20px;
+    margin-top: 3px;
+  }
+
+  /* ── Barre de recherche & icône ── */
+  #search {
+    display: none;
+  }
+
+  #icone {
+    display: none;
+  }
+
+  /* ── Groupe icônes (cloche, profil, logout) ── */
+  #input {
+    margin-top: 4px;
+  }
+
+  #groupe {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* ── Sections sans marge gauche ── */
   section {
     margin-left: 0 !important;
   }
 
+  /* ── Décalage du contenu hôtel (div.ml-[270px]) ── */
+  #lorem {
+    margin-left: 0 !important;
+    margin-top: 48px !important;
+  }
+ 
+
+  /* ── Dashboard : grille 1 colonne ── */
   section .grid {
     grid-template-columns: 1fr;
     padding: 16px;
@@ -93,4 +165,64 @@
   section .grid > div {
     width: 100%;
   }
+
+  /* ── Hôtels : grille 1 colonne ── */
+  #hotel {
+    grid-template-columns: 1fr;
+    width: 90%;
+  }
+
+  #hotel > div {
+    width: 100%;
+  }
+
+  /* ── Barre "Ajouter un hôtel" ── */
+  #Ajouterhotel {
+    margin-left: 0 !important;
+    flex-direction: column;
+    gap: 12px;
+    height: auto;
+    padding: 16px;
+  }
+
+  #Ajouterhotel button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ── Liste des hôtels (div.ml-[280px]) ── */
+  .ml-\[280px\] {
+    margin-left: 0 !important;
+  }
+
+  /* ── Modal responsive ── */
+  #modal > div {
+    width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 16px;
+  }
+
+  #modal .flex.gap-10 {
+    display: flex;
+    gap: 0;
+  }
+
+  #modal .flex.flex-col.gap-3.p-4 {
+    padding: 8px;
+  }
+
+  #modal input,
+  #modal select {
+    width: 100% !important;
+  }
+  #enrgistrer{
+  margin-left: 30%;
+  }
+
+  /* #modal .ml-\[70\%\] {
+    margin-left: 0;
+    display: flex;
+    justify-content: flex-end;
+  } */
 }

@@ -11,18 +11,18 @@
 </head>
 <body class="bg-gray-100">
 
-  <!-- ✅ Checkbox en PREMIER — tous les éléments suivants sont ses frères directs -->
+  
   <input type="checkbox" id="sidebar-toggle">
 
-  <!-- ✅ Frère direct #1 : bouton hamburger -->
+  
   <label for="sidebar-toggle" class="hamburger-btn">
     <i class="fa-solid fa-bars"></i>
   </label>
 
-  <!-- ✅ Frère direct #2 : overlay -->
+  
   <div class="sidebar-overlay" onclick="document.getElementById('sidebar-toggle').checked = false"></div>
 
-  <!-- ✅ Frère direct #3 : sidebar  →  le sélecteur ~ fonctionne maintenant -->
+  <!--  : sidebar  →  le sélecteur ~ fonctionne maintenant -->
   <aside class="fixed">
     <div class="bg-[url('images/bg1.jpeg')] bg-cover bg-center w-[270px] relative h-[100vh]">
       <div class="w-[270px] h-[100vh] inset-0 bg-black/60">
@@ -49,22 +49,24 @@
   </aside>
 
   <!-- ✅ Frère direct #4 : header -->
-  <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm">
-    <h1 class="font-bold text-xl">Dashboard</h1>
-    <div class="flex gap-4 items-center">
-      <div class="relative">
+  <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm" id="header">
+    <h1 class="font-bold text-xl" id="dashboard">Dashboard</h1>
+    <div class="flex gap-4 items-center" id="input" >
+      <div class="relative" id="input">
         <input type="text" name="search" id="search" placeholder="Rechercher"
           class="pl-10 pr-2 py-1 border border-gray-300 rounded-2xl">
-        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-sm"></i>
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-sm" id="icone"></i>
       </div>
-      <i class="fa-regular fa-bell text-xl"></i>
-      <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top">
-      <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
+          <div id="groupe" class="flex gap-2" id="groupe">
+            <i class="fa-regular fa-bell text-xl"></i>
+            <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top" id="profile">
+            <a href="connexion.html"> <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
+          </div>
     </div>
   </header>
 
   <!-- Sections du contenu -->
-  <section class="ml-[270px] pt-14">
+  <section class="ml-[270px] pt-9" id="lorem">
     <div class="bg-white h-18 px-6 p-5">
       <h1 class="text-2xl text-gray-600">Bienvenue sur RED PRODUCT</h1>
       <p class="text-sm text-gray-600">Lorem ipsum dolor sit, amet consectetur.</p>
