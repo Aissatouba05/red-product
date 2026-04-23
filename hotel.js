@@ -1,4 +1,4 @@
-   let hotels = [];
+    let hotels = [];
     let currentHotelId = null;
 
     function generateId() {
@@ -79,11 +79,20 @@
         );
         if (!res.ok) throw new Error();
         const data = await res.json();
-        hotels = data.hotels.map(h => ({ ...h, id: h._id || h.id || generateId() }));
+
+        // Gérer les deux formats : {hotels, totalPages} ou tableau direct
+        if (Array.isArray(data)) {
+          hotels = data.map(h => ({ ...h, id: h._id || h.id || generateId() }));
+          renderHotels(hotels);
+          renderPagination(1, 1);
+        } else {
+          hotels = (data.hotels || []).map(h => ({ ...h, id: h._id || h.id || generateId() }));
+          renderHotels(hotels);
+          renderPagination(data.page, data.totalPages);
+        }
         saveLocal();
-        renderHotels(hotels);
-        renderPagination(data.page, data.totalPages);
-      } catch {
+      } catch (err) {
+        console.error('Erreur loadHotels:', err);
         hotels = loadLocal();
         renderHotels(hotels);
       }
@@ -465,3 +474,17 @@
         reader.readAsDataURL(file);
       }
     });
+    // ========= DÉCONNEXION =========
+    async function logout() {
+      const token = localStorage.getItem('token');
+      try {
+        await fetch('https://red-product-back-jtx4.onrender.com/api/auth/deconnexion', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch { /* serveur absent */ }
+      localStorage.removeItem('token');
+      localStorage.removeItem('userNom');
+      localStorage.removeItem('userId');
+      window.location = 'index.html';
+    }
