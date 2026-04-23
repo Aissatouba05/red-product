@@ -1,4 +1,4 @@
-    let hotels = [];
+   let hotels = [];
     let currentHotelId = null;
 
     function generateId() {
@@ -65,18 +65,67 @@
     if (!authToken) window.location.href = 'index.html';
     const authHeaders = { Authorization: `Bearer ${authToken}` };
 
-    // ---- CHARGER DEPUIS SERVEUR (ou localStorage) ----
-    async function loadHotels() {
+    // ---- PAGINATION ----
+    let currentPage = 1;
+    const limit = 8;
+
+    // ---- CHARGER DEPUIS SERVEUR avec pagination ----
+    async function loadHotels(page = 1) {
+      currentPage = page;
       try {
-        const res = await fetch('https://red-product-back-jtx4.onrender.com/api/hotels', { headers: authHeaders });
+        const res = await fetch(
+          `https://red-product-back-jtx4.onrender.com/api/hotels?page=${page}&limit=${limit}`,
+          { headers: authHeaders }
+        );
         if (!res.ok) throw new Error();
         const data = await res.json();
-        hotels = data.map(h => ({ ...h, id: h._id || h.id || generateId() }));
+        hotels = data.hotels.map(h => ({ ...h, id: h._id || h.id || generateId() }));
         saveLocal();
+        renderHotels(hotels);
+        renderPagination(data.page, data.totalPages);
       } catch {
         hotels = loadLocal();
+        renderHotels(hotels);
       }
-      renderHotels(hotels);
+    }
+
+    // ---- RENDU PAGINATION ----
+    function renderPagination(page, totalPages) {
+      const container = document.getElementById('pagination');
+      if (!container) return;
+      container.innerHTML = '';
+      if (!totalPages || totalPages <= 1) return;
+
+      // Bouton Précédent
+      const prev = document.createElement('button');
+      prev.textContent = '←';
+      prev.className = page === 1
+        ? 'px-3 py-1 rounded border text-sm text-gray-300 cursor-not-allowed'
+        : 'px-3 py-1 rounded border text-sm hover:bg-gray-100 cursor-pointer';
+      prev.disabled = page === 1;
+      prev.addEventListener('click', () => loadHotels(page - 1));
+      container.appendChild(prev);
+
+      // Numéros de pages
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = i === page
+          ? 'px-3 py-1 rounded bg-gray-800 text-white text-sm'
+          : 'px-3 py-1 rounded border text-sm hover:bg-gray-100 cursor-pointer';
+        btn.addEventListener('click', () => loadHotels(i));
+        container.appendChild(btn);
+      }
+
+      // Bouton Suivant
+      const next = document.createElement('button');
+      next.textContent = '→';
+      next.className = page === totalPages
+        ? 'px-3 py-1 rounded border text-sm text-gray-300 cursor-not-allowed'
+        : 'px-3 py-1 rounded border text-sm hover:bg-gray-100 cursor-pointer';
+      next.disabled = page === totalPages;
+      next.addEventListener('click', () => loadHotels(page + 1));
+      container.appendChild(next);
     }
 
     // ---- MODAL AJOUTER ----
@@ -126,7 +175,13 @@
         if (imageFile) formData.append('image', imageFile);
 
         const res = await fetch('https://red-product-back-jtx4.onrender.com/api/hotels', { method: 'POST', headers: authHeaders, body: formData });
-        if (res.ok) { savedFromServer = true; modal.classList.add('hidden'); resetAddForm(); loadHotels(); }
+        if (res.ok) {
+          savedFromServer = true;
+          modal.classList.add('hidden');
+          resetAddForm();
+          loadHotels();
+          addNotif(`🏨 Hôtel "${nom}" ajouté avec succès !`);
+        }
       } catch { /* pas de serveur */ }
 
       if (!savedFromServer) {
@@ -270,3 +325,143 @@
 
     // ---- INIT ----
     window.addEventListener('load', loadHotels);
+
+    // ========= NOTIFICATIONS =========
+    let notifications = JSON.parse(localStorage.getItem('redproduct_notifs') || '[]');
+
+    function saveNotifs() {
+      localStorage.setItem('redproduct_notifs', JSON.stringify(notifications));
+    }
+
+    function addNotif(message) {
+      const notif = {
+        id: generateId(),
+        message,
+        date: new Date().toLocaleString('fr-FR'),
+        lu: false
+      };
+      notifications.unshift(notif);
+      saveNotifs();
+      renderNotifs();
+    }
+
+    function renderNotifs() {
+      const list  = document.getElementById('notifList');
+      const badge = document.getElementById('notifBadge');
+      if (!list) return;
+
+      const nonLus = notifications.filter(n => !n.lu).length;
+
+      if (nonLus > 0) {
+        badge.textContent = nonLus > 9 ? '9+' : nonLus;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      if (notifications.length === 0) {
+        list.innerHTML = '<p class="text-center text-gray-400 text-sm py-4">Aucune notification</p>';
+        return;
+      }
+
+      list.innerHTML = notifications.map(n => `
+        <div class="px-4 py-3 ${n.lu ? 'bg-white' : 'bg-blue-50'} hover:bg-gray-50 transition">
+          <p class="text-sm text-gray-700">${n.message}</p>
+          <p class="text-xs text-gray-400 mt-1">${n.date}</p>
+        </div>
+      `).join('');
+    }
+
+    function clearNotifs() {
+      notifications = [];
+      saveNotifs();
+      renderNotifs();
+    }
+
+    // Ouvrir/fermer le dropdown
+    document.getElementById('bellBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dropdown = document.getElementById('notifDropdown');
+      dropdown.classList.toggle('hidden');
+      // Marquer toutes comme lues
+      notifications = notifications.map(n => ({ ...n, lu: true }));
+      saveNotifs();
+      renderNotifs();
+    });
+
+    // Fermer en cliquant ailleurs
+    document.addEventListener('click', () => {
+      document.getElementById('notifDropdown').classList.add('hidden');
+    });
+
+    // Initialiser les notifications
+    renderNotifs();
+
+    // ========= PHOTO DE PROFIL =========
+    const API_URL = 'https://red-product-back-jtx4.onrender.com';
+
+    // Charger la photo depuis le serveur
+    async function loadUserPhoto() {
+      try {
+        const res = await fetch(`${API_URL}/api/auth/me`, { headers: authHeaders });
+        const user = await res.json();
+        if (user.photo) {
+          const photoUrl = `${API_URL}${user.photo}`;
+          document.getElementById('headerPhoto').src  = photoUrl;
+          document.getElementById('sidebarPhoto').src = photoUrl;
+          localStorage.setItem('redproduct_photo', photoUrl);
+        } else {
+          // Utiliser la photo locale si pas de photo serveur
+          const savedPhoto = localStorage.getItem('redproduct_photo');
+          if (savedPhoto) {
+            document.getElementById('headerPhoto').src  = savedPhoto;
+            document.getElementById('sidebarPhoto').src = savedPhoto;
+          }
+        }
+      } catch {
+        const savedPhoto = localStorage.getItem('redproduct_photo');
+        if (savedPhoto) {
+          document.getElementById('headerPhoto').src  = savedPhoto;
+          document.getElementById('sidebarPhoto').src = savedPhoto;
+        }
+      }
+    }
+
+    loadUserPhoto();
+
+    // Changer la photo
+    document.getElementById('photoInput').addEventListener('change', async function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('photo', file);
+
+      try {
+        const res = await fetch(`${API_URL}/api/auth/photo`, {
+          method: 'PUT',
+          headers: authHeaders,
+          body: formData
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const photoUrl = `${API_URL}${data.photo}`;
+          document.getElementById('headerPhoto').src  = photoUrl;
+          document.getElementById('sidebarPhoto').src = photoUrl;
+          localStorage.setItem('redproduct_photo', photoUrl);
+          addNotif('📸 Photo de profil mise à jour !');
+        } else {
+          alert('Erreur lors du changement de photo');
+        }
+      } catch {
+        // Fallback local si serveur absent
+        const reader = new FileReader();
+        reader.onload = e => {
+          document.getElementById('headerPhoto').src  = e.target.result;
+          document.getElementById('sidebarPhoto').src = e.target.result;
+          localStorage.setItem('redproduct_photo', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
