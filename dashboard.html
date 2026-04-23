@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,18 +11,13 @@
 </head>
 <body class="bg-gray-100">
 
-  
   <input type="checkbox" id="sidebar-toggle">
-
-  
   <label for="sidebar-toggle" class="hamburger-btn">
     <i class="fa-solid fa-bars"></i>
   </label>
-
-  
   <div class="sidebar-overlay" onclick="document.getElementById('sidebar-toggle').checked = false"></div>
 
-  <!--  : sidebar  →  le sélecteur ~ fonctionne maintenant -->
+  <!-- SIDEBAR (design original conservé) -->
   <aside class="fixed">
     <div class="bg-[url('images/bg1.jpeg')] bg-cover bg-center w-[270px] relative h-[100vh]">
       <div class="w-[270px] h-[100vh] inset-0 bg-black/60">
@@ -44,28 +39,39 @@
           <a href="hotel.html" class="text-white">Liste des hôtels</a>
         </div>
 
+        <div class="flex gap-2 p-8 mt-[110%] border-t-[1px] border-gray-500">
+          <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top">
+          <div>
+            <h1 id="userNom" class="text-white">...</h1>
+            <div class="flex gap-2 p-2">
+              <div class="bg-green-500 rounded-full w-2 h-2 mt-2"></div>
+              <p class="text-gray-400">En ligne</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </aside>
 
-  <!-- ✅ Frère direct #4 : header -->
+  <!-- HEADER (design original conservé) -->
   <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm" id="header">
     <h1 class="font-bold text-xl" id="dashboard">Dashboard</h1>
-    <div class="flex gap-4 items-center" id="input" >
-      <div class="relative" id="input">
-        <input type="text" name="search" id="search" placeholder="Rechercher"
+    <div class="flex gap-4 items-center">
+      <div class="relative">
+        <input type="text" id="search" placeholder="Rechercher"
           class="pl-10 pr-2 py-1 border border-gray-300 rounded-2xl">
-        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-sm" id="icone"></i>
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-sm"></i>
       </div>
-          <div id="groupe" class="flex gap-2" id="groupe">
-            <i class="fa-regular fa-bell text-xl"></i>
-            <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top" id="profile">
-            <a href="index.html"> <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
-          </div>
+      <div class="flex gap-2">
+        <i class="fa-regular fa-bell text-xl"></i>
+        <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top">
+        <a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
+      </div>
     </div>
   </header>
 
-  <!-- Sections du contenu -->
+  <!-- BIENVENUE (design original conservé) -->
   <section class="ml-[270px] pt-9" id="lorem">
     <div class="bg-white h-18 px-6 p-5">
       <h1 class="text-2xl text-gray-600">Bienvenue sur RED PRODUCT</h1>
@@ -73,71 +79,74 @@
     </div>
   </section>
 
+  <!-- CARTES STATS (design original conservé, chiffres dynamiques) -->
   <section class="ml-[270px]">
-    <div class="grid grid-cols-3 gap-6 p-8 mb-[50px]">
+    <div class="grid grid-cols-3 gap-6 p-8 mb-[50px]" id="statsGrid">
 
-      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl stat-card" data-label="formulaires">
         <div class="bg-purple-400 w-11 h-11 rounded-full flex items-center justify-center">
           <i class="fa-solid fa-envelope-open text-white text-sm"></i>
         </div>
         <div>
-          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">125 </span>Formulaires</p>
-          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+          <p class="text-sm text-gray-600"><span id="stat-formulaires" class="text-2xl text-gray-600">–</span> Formulaires</p>
+          <p class="text-sm text-gray-600">Total des formulaires soumis</p>
         </div>
       </div>
 
-      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl stat-card" data-label="messages">
         <div class="bg-green-300 w-11 h-11 rounded-full flex items-center justify-center">
-          <h1 class="text-white text-sm font-bold">P</h1>
+          <i class="fa-solid fa-message text-white text-sm"></i>
         </div>
         <div>
-          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">40 </span>Messages</p>
-          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+          <p class="text-sm text-gray-600"><span id="stat-messages" class="text-2xl text-gray-600">–</span> Messages</p>
+          <p class="text-sm text-gray-600">Total des messages reçus</p>
         </div>
       </div>
 
-      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl stat-card" data-label="utilisateurs">
         <div class="bg-orange-300 w-11 h-11 rounded-full flex items-center justify-center">
           <i class="fa-solid fa-user-group text-white text-sm"></i>
         </div>
         <div>
-          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">600 </span>Utilisateurs</p>
-          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+          <p class="text-sm text-gray-600"><span id="stat-utilisateurs" class="text-2xl text-gray-600">–</span> Utilisateurs</p>
+          <p class="text-sm text-gray-600">Utilisateurs enregistrés</p>
         </div>
       </div>
 
-      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl stat-card" data-label="emails">
         <div class="bg-red-500 w-11 h-11 rounded-full flex items-center justify-center">
           <i class="fa-solid fa-envelope-open text-white text-sm"></i>
         </div>
         <div>
-          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">25 </span>E-mails</p>
-          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+          <p class="text-sm text-gray-600"><span id="stat-emails" class="text-2xl text-gray-600">–</span> E-mails</p>
+          <p class="text-sm text-gray-600">Total des e-mails envoyés</p>
         </div>
       </div>
 
-      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl stat-card" data-label="hôtels">
         <div class="bg-violet-500 w-11 h-11 rounded-full flex items-center justify-center">
-          <h1 class="text-white text-sm font-bold">P</h1>
+          <i class="fa-solid fa-hotel text-white text-sm"></i>
         </div>
         <div>
-          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">40 </span>Hôtels</p>
-          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+          <p class="text-sm text-gray-600"><span id="stat-hotels" class="text-2xl text-gray-600">–</span> Hôtels</p>
+          <p class="text-sm text-gray-600">Hôtels enregistrés</p>
         </div>
       </div>
 
-      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl">
+      <div class="flex gap-4 bg-white w-[320px] p-3 rounded-xl stat-card" data-label="entités">
         <div class="bg-blue-700 w-11 h-11 rounded-full flex items-center justify-center">
           <i class="fa-solid fa-user-group text-white text-sm"></i>
         </div>
         <div>
-          <p class="text-sm text-gray-600"><span class="text-2xl text-gray-600">02 </span>Entités</p>
-          <p class="text-sm text-gray-600">Je ne sais pas quoi mettre</p>
+          <p class="text-sm text-gray-600"><span id="stat-entites" class="text-2xl text-gray-600">–</span> Entités</p>
+          <p class="text-sm text-gray-600">Entités actives</p>
         </div>
       </div>
 
     </div>
   </section>
+
+  <script src="dashboard.js"></script>
 
 </body>
 </html>

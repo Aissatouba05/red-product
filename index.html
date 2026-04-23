@@ -9,63 +9,68 @@
 </head>
 <body>
 
-  
   <div class="bg-[url('images/bg1.jpeg')] bg-gray-800 bg-cover bg-center min-h-screen flex items-center justify-center relative">
     <div class="absolute inset-0 bg-black/65"></div>
 
-  
     <div class="relative z-10 flex flex-col items-center gap-6">
 
-    
       <div class="flex items-center gap-3">
         <i class="fa-regular fa-bookmark text-white text-2xl"></i>
         <span class="font-bold text-white text-2xl tracking-wide">RED PRODUCT</span>
       </div>
 
-     
       <div class="bg-white rounded-sm shadow-2xl w-80 px-4 py-7">
 
-      
         <div class="mb-8">
-          <h1 class=" text-center text-sm">Connectez-vous en tant que Admin</h1>
+          <h1 class="text-center text-sm">Connectez-vous en tant que Admin</h1>
         </div>
 
-       
-        <form class="flex flex-col gap-6">
+        <form class="flex flex-col gap-6" onsubmit="event.preventDefault(); login(email.value, pwd.value)">
           <div class="flex flex-col gap-1">
             <div class="flex items-center gap-2 border-b border-gray-200 focus-within:border-red-600 pb-2">
-              <input type="email" placeholder="E-mail" class="flex-1 bg-transparent outline-none text-sm text-gray-800 placeholder-gray-400" />
+              <input
+                id="email"
+                type="email"
+                placeholder="E-mail"
+                class="flex-1 bg-transparent outline-none text-sm text-gray-800 placeholder-gray-400"
+              />
             </div>
           </div>
 
-          
           <div class="flex flex-col gap-1">
             <div class="flex items-center gap-2 border-b border-gray-200 focus-within:border-red-600 pb-2">
-              <input type="password" placeholder="Mot de passe" class="flex-1 bg-transparent outline-none text-sm text-gray-800 placeholder-gray-400"/>
+              <input
+                id="pwd"
+                type="password"
+                placeholder="Mot de passe"
+                class="flex-1 bg-transparent outline-none text-sm text-gray-800 placeholder-gray-400"
+              />
             </div>
           </div>
 
-          
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" class="accent-black w-4 h-4" />
-              <span class="text-sm ">Garder moi connecté </span>
+              <span class="text-sm">Garder moi connecté</span>
             </div>
           </div>
 
-        
-          <a href="dashboard.html"><button type="submit" class="bg-gray-700 hover:bg-black active:scale-95 text-white text-sm py-3 rounded-lg transition-all duration-200 mt-5">
-            Se connecter</a>  
+          <button type="submit" class="bg-gray-700 hover:bg-black active:scale-95 text-white text-sm py-3 rounded-lg transition-all duration-200 mt-5">
+            Se connecter
           </button>
-
         </form>
       </div>
 
-     
-      <a href="mdp.html" class="text-yellow-500 text-[15px] font-bold">Mot de passe oublié?</a>
-      <p class="text-white">Vous n'avez pas de compte? <span class="text-yellow-500 text-[15px] font-bold"><a href="inscrire.html">S'inscrire</a></span></p>
+      <a href="reset.html" class="text-yellow-500 text-[15px] font-bold">Mot de passe oublié ?</a>
+      <p class="text-white text-sm">
+        Vous n'avez pas de compte ?
+        <span class="text-yellow-500 text-[15px] font-bold">
+          <a href="register.html">S'inscrire</a>
+        </span>
+      </p>
     </div>
   </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
