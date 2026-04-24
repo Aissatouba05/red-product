@@ -40,7 +40,7 @@
         </div>
 
         <div class="flex gap-2 p-8 mt-[110%] border-t-[1px] border-gray-500">
-          <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top">
+          <img id="sidebarPhoto" src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer" onclick="document.getElementById('photoInput').click()">
           <div>
             <h1 id="userNom" class="text-white">...</h1>
             <div class="flex gap-2 p-2">
@@ -63,10 +63,27 @@
           class="pl-10 pr-2 py-1 border border-gray-300 rounded-2xl">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2 text-gray-400 text-sm"></i>
       </div>
-      <div class="flex gap-2">
-        <i class="fa-regular fa-bell text-xl"></i>
-        <img src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top">
-        <a href="index.html"><i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
+      <div class="flex gap-2 items-center">
+        <!-- CLOCHE -->
+        <div class="relative cursor-pointer" id="bellBtn">
+          <i class="fa-regular fa-bell text-xl"></i>
+          <span id="notifBadge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+        </div>
+        <!-- DROPDOWN NOTIFICATIONS -->
+        <div id="notifDropdown" class="hidden absolute top-12 right-16 bg-white shadow-xl rounded-xl w-72 z-[200] border border-gray-100 max-h-80 overflow-y-auto">
+          <div class="flex justify-between items-center px-4 py-3 border-b">
+            <span class="font-semibold text-sm">Notifications</span>
+            <button onclick="clearNotifs()" class="text-xs text-red-500 hover:underline">Tout effacer</button>
+          </div>
+          <div id="notifList" class="divide-y divide-gray-100">
+            <p class="text-center text-gray-400 text-sm py-4">Aucune notification</p>
+          </div>
+        </div>
+        <!-- PHOTO PROFIL -->
+        <img id="headerPhoto" src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer" onclick="document.getElementById('photoInput').click()">
+        <!-- INPUT CACHÉ -->
+        <input type="file" id="photoInput" accept="image/*" class="hidden">
+        <a href="#" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
       </div>
     </div>
   </header>
