@@ -8,19 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=dashboard" />
-    <style>
-      #sidebar-toggle { display: none; }
-      .hamburger-btn { display: none; position: fixed; top: 12px; left: 16px; z-index: 200; cursor: pointer; font-size: 20px; }
-      .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 90; }
-      @media (max-width: 768px) {
-        .hamburger-btn { display: block; }
-        aside { transform: translateX(-100%); transition: transform .3s; z-index: 100; }
-        #sidebar-toggle:checked ~ aside { transform: translateX(0); }
-        #sidebar-toggle:checked ~ .sidebar-overlay { display: block; }
-      }
-      .hotel-card { cursor: pointer; transition: transform .15s, box-shadow .15s; }
-      .hotel-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.13); }
-    </style>
+   <link rel="stylesheet" href="dashboard.css">
 </head>
 <body class="bg-gray-100">
   <input type="checkbox" id="sidebar-toggle">
@@ -69,8 +57,8 @@
   </aside>
 
   <!-- HEADER -->
-  <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm">
-    <h1 class="font-bold text-xl">Dashboard</h1>
+  <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm" id="header1">
+    <h1 class="font-bold text-xl" id="dashboard">Dashboard</h1>
     <div class="flex gap-4 items-center">
       <div class="relative">
         <input type="text" id="search" placeholder="Rechercher"
@@ -103,7 +91,7 @@
   </header>
 
   <!-- BARRE TITRE + BOUTON -->
-  <div class="ml-[270px] pt-10">
+  <div class="ml-[270px] pt-10" id="lorem">
     <div class="bg-white h-20 p-7 flex justify-between items-center">
       <h1 class="text-2xl">Hôtels <span id="hotelCount" class="text-gray-300 text-2xl">0</span></h1>
       <button id="openModal" class="border rounded-xl px-5 py-3 flex items-center justify-center gap-2 text-sm">
@@ -113,7 +101,11 @@
   </div>
 
   <!-- GRILLE DES HÔTELS -->
-  <div id="hotel" class="ml-[270px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-6">
+  <div id="hotel" class="ml-[270px] grid grid-cols-2 
+         sm:grid-cols-1 
+         md:grid-cols-2 
+         lg:grid-cols-4 
+         gap-4 p-6">
   </div>
   <p id="noResults" class="hidden ml-[270px] text-center text-gray-400 py-10 text-sm">Aucun hôtel trouvé.</p>
   <!-- PAGINATION -->
@@ -148,10 +140,6 @@
             <option value="USD">Dollar</option>
           </select>
         </div>
-      </div>
-      <div class="flex flex-col gap-3 p-3">
-        <label>Description</label>
-        <textarea id="addDescription" rows="2" placeholder="Décrivez l'hôtel…" class="border w-full p-1 rounded-xl resize-none"></textarea>
       </div>
       <div class="flex flex-col gap-3 p-3">
         <label>Photo de l'hôtel</label>
@@ -195,19 +183,16 @@
           <span class="text-[12px] text-[#AAAAAA] font-medium">Prix</span>
           <span id="detailPrix" class="text-[15px] text-[#8D4B38] font-semibold"></span>
         </div>
-        <div class="flex flex-col gap-1">
-          <span class="text-[12px] text-[#AAAAAA] font-medium">Description</span>
-          <span id="detailDescription" class="text-[15px] text-[#333333]"></span>
-        </div>
+       
       </div>
       <div class="flex justify-end gap-3 mt-6">
         <button id="btnSupprimerDetail"
           class="bg-red-500 text-white px-6 py-3 rounded-xl text-[15px] font-medium hover:bg-red-600 transition">
-          🗑 Supprimer
+           Supprimer
         </button>
         <button id="btnModifierDetail"
           class="bg-[#333333] text-white px-6 py-3 rounded-xl text-[15px] font-medium hover:bg-[#555555] transition">
-          ✏️ Modifier
+           Modifier
         </button>
       </div>
     </div>
@@ -254,10 +239,7 @@
             </select>
           </div>
         </div>
-        <div class="flex flex-col gap-1 mt-4">
-          <label class="text-[14px] font-medium text-[#555555]">Description</label>
-          <textarea id="editDescription" rows="3" class="border border-[#DDDDDD] rounded-xl px-4 py-3 text-[14px] outline-none focus:border-[#555555] resize-none"></textarea>
-        </div>
+       
         <div class="flex justify-end mt-6">
           <button type="submit" class="bg-[#333333] text-white px-8 py-3 rounded-xl text-[15px] font-medium hover:bg-[#555555] transition">
             Enregistrer

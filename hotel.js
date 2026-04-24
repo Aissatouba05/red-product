@@ -166,7 +166,7 @@
       const adresse     = document.getElementById('addAdresse').value.trim();
       const numero      = document.getElementById('addNumero').value.trim();
       const devise      = document.getElementById('addDevise').value;
-      const description = document.getElementById('addDescription').value.trim();
+      // const description = document.getElementById('addDescription').value.trim();
       const imageFile   = document.getElementById('addImage').files[0];
 
       if (!nom || !email || !adresse || !numero || !prix) {
@@ -180,7 +180,7 @@
         formData.append('nom', nom); formData.append('email', email);
         formData.append('prix', prix); formData.append('adresse', adresse);
         formData.append('numero', numero); formData.append('devise', devise);
-        formData.append('description', description);
+        // formData.append('description', description);
         if (imageFile) formData.append('image', imageFile);
 
         const res = await fetch('https://red-product-back-jtx4.onrender.com/api/hotels', { method: 'POST', headers: authHeaders, body: formData });
@@ -194,7 +194,7 @@
       } catch { /* pas de serveur */ }
 
       if (!savedFromServer) {
-        const newHotel = { id: generateId(), nom, email, prix, adresse, numero, devise, description };
+        const newHotel = { id: generateId(), nom, email, prix, adresse, numero, devise };
         if (imageFile) {
           const reader = new FileReader();
           reader.onload = e => { newHotel.imageData = e.target.result; hotels.push(newHotel); saveLocal(); renderHotels(hotels); };
@@ -210,7 +210,7 @@
     });
 
     function resetAddForm() {
-      ['addNom','addEmail','addPrix','addAdresse','addNumero','addDescription'].forEach(id => document.getElementById(id).value = '');
+      ['addNom','addEmail','addPrix','addAdresse','addNumero',].forEach(id => document.getElementById(id).value = '');
       document.getElementById('addDevise').value = 'XOF';
       document.getElementById('addImage').value = '';
       const prev = document.getElementById('addImagePreview');
@@ -230,7 +230,7 @@
       document.getElementById('detailEmail').textContent      = h.email || '–';
       document.getElementById('detailTelephone').textContent  = h.numero || '–';
       document.getElementById('detailPrix').textContent       = `${Number(h.prix).toLocaleString('fr-FR')} ${h.devise || 'XOF'}`;
-      document.getElementById('detailDescription').textContent = h.description || '–';
+      // document.getElementById('detailDescription').textContent = h.description || '–';
 
       document.getElementById('modalDetails').classList.remove('hidden');
     }
@@ -264,7 +264,7 @@
       document.getElementById('editTelephone').value   = h.numero || '';
       document.getElementById('editPrix').value        = h.prix;
       document.getElementById('editDevise').value      = h.devise || 'XOF';
-      document.getElementById('editDescription').value = h.description || '';
+      // document.getElementById('editDescription').value = h.description || '';
       document.getElementById('modalModifier').classList.remove('hidden');
     });
 
@@ -283,7 +283,7 @@
         numero:      document.getElementById('editTelephone').value.trim(),
         prix:        document.getElementById('editPrix').value.trim(),
         devise:      document.getElementById('editDevise').value,
-        description: document.getElementById('editDescription').value.trim(),
+        // description: document.getElementById('editDescription').value.trim(),
       };
 
       let done = false;

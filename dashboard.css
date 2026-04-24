@@ -34,7 +34,7 @@
   }
 
   /* Hôtels : grille 4 → 2 colonnes */
-  #hotel {
+  /* #hotel {
     grid-template-columns: repeat(2, 2fr);
   }
 
@@ -44,9 +44,22 @@
    #hotel {
     width: 150%;
 
-   }
+   } */
 
    }
+
+/* 
+     #sidebar-toggle { display: none; }
+      .hamburger-btn { display: none; position: fixed; top: 12px; left: 16px; z-index: 200; cursor: pointer; font-size: 20px; }
+      .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 90; }
+      @media (max-width: 768px) {
+        .hamburger-btn { display: block; }
+        aside { transform: translateX(-100%); transition: transform .3s; z-index: 100; }
+        #sidebar-toggle:checked ~ aside { transform: translateX(0); }
+        #sidebar-toggle:checked ~ .sidebar-overlay { display: block; }
+      } */
+      /* .hotel-card { cursor: pointer; transition: transform .15s, box-shadow .15s; }
+      .hotel-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.13); } */
 
 /* ════════════════════════════════════════════
    TABLETTE  (< 1024px)
@@ -61,16 +74,21 @@
   section .grid > div {
     width: 100%;
   }
+   }
 
   /* Hôtels : grille 4 → 2 colonnes */
-  #hotel {
-    grid-template-columns: repeat(2, 2fr);
+   /* #hotel {
+ grid-template-columns: repeat(2, 1fr);  
+  width: 90%;
+     
   }
 
   #hotel > div {
-    width: 100%;
+    width: 50%;   
   }
-}
+} */
+
+
 
 
 /* ════════════════════════════════════════════
@@ -165,16 +183,19 @@
   section .grid > div {
     width: 100%;
   }
-
+ 
   /* ── Hôtels : grille 1 colonne ── */
-  #hotel {
-    grid-template-columns: 1fr;
-    width: 90%;
+   #hotel {
+    display: grid;
+  grid-template-columns: 2fr;    
+  width: 90%;
+  margin: 0 auto;                 
   }
 
   #hotel > div {
     width: 100%;
-  }
+    
+  } 
 
   /* ── Barre "Ajouter un hôtel" ── */
   #Ajouterhotel {
@@ -217,7 +238,7 @@
     width: 100% !important;
   }
   #enrgistrer{
-  margin-left: 30%;
+  margin-left: 0%;
   }
 
   /* #modal .ml-\[70\%\] {
