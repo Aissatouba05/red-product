@@ -23,7 +23,8 @@
       <div class="w-[270px] h-[100vh] inset-0 bg-black/60">
 
         <div class="flex items-center gap-3 justify-center py-4">
-          <i class="fa-regular fa-bookmark text-white text-2xl"></i>
+          <!-- <i class="fa-regular fa-bookmark text-white text-2xl"></i> -->
+            <img src="images/Link → SVG.png" alt="" class="W-4 h-6" >
           <span class="font-bold text-white text-xl tracking-wide">RED PRODUCT</span>
         </div>
 
@@ -122,32 +123,35 @@
       <div class="flex gap-10">
         <div class="flex flex-col gap-2 p-4">
           <label>Nom de l'hôtel</label>
-          <input id="addNom" type="text" placeholder="CAP Mamiane" class="border w-64 p-1 rounded-xl">
+          <input id="addNom" type="text" placeholder="CAP Mamiane" class="border w-64 p-1 rounded-md text-sm ">
           <label>E-mail</label>
-          <input id="addEmail" type="email" placeholder="information@gmail.com" class="border w-64 p-1 rounded-xl">
+          <input id="addEmail" type="email" placeholder="information@gmail.com" class="border w-64 p-1 rounded-md text-sm">
           <label>Prix par nuit</label>
-          <input id="addPrix" type="number" placeholder="25 000 XOF" class="border w-64 p-1 rounded-xl">
+          <input id="addPrix" type="number" placeholder="25 000 XOF" class="border w-64 p-1 rounded-md text-sm">
         </div>
         <div class="flex flex-col gap-2 p-4">
           <label>Adresse</label>
-          <input id="addAdresse" type="text" placeholder="Les listes du Saloum, Mar Lodj" class="border w-64 p-1 rounded-xl">
+          <input id="addAdresse" type="text" placeholder="Les listes du Saloum, Mar Lodj" class="border w-64 p-1 rounded-md text-sm">
           <label>Numero</label>
-          <input id="addNumero" type="text" placeholder="+221 777 77 77" class="border w-64 p-1 rounded-xl">
+          <input id="addNumero" type="text" placeholder="+221 777 77 77" class="border w-64 p-1 rounded-md text-sm">
           <label>Devise</label>
-          <select id="addDevise" class="border w-64 p-1 rounded-xl">
-            <option value="XOF">F XOF</option>
-            <option value="EUR">Euro</option>
-            <option value="USD">Dollar</option>
+          <select id="addDevise" class="border w-64 p-1 rounded-md text-sm">
+            <option value="XOF"  class="text-sm">F XOF</option>
+            <option value="EUR"  class="text-sm">Euro</option>
+            <option value="USD"  class="text-sm">Dollar</option>
           </select>
         </div>
       </div>
-      <div class="flex flex-col gap-2
-      
-      p-3">
-        <label>Photo de l'hôtel</label>
-        <input id="addImage" type="file" accept="image/*" class="border w-full py-6 rounded-xl">
-        <img id="addImagePreview" src="" alt="" class="hidden w-full h-32 object-cover rounded-xl mt-1">
-      </div>
+<div class="flex flex-col gap-2 p-3">
+  <label>Photo de l'hôtel</label>
+  <label for="addImage" class="cursor-pointer border border-gray-200 rounded-md w-full h-28 flex flex-col items-center justify-center gap-2 bg-white hover:bg-gray-50 transition">
+    <i class="fa-regular fa-image text-gray-300 text-4xl"></i>
+    <span class="text-gray-400 text-sm">Ajouter une photo</span>
+  </label>
+  <input id="addImage" type="file" accept="image/*" class="hidden">
+  <img id="addImagePreview" src="" alt="" class="hidden w-full h-32 object-cover rounded-md mt-1">
+</div>
+
       <div class="ml-[79%] mt-2">
         <button id="saveHotelBtn" class="p-2 px-5 bg-gray-600 text-white rounded-xl">Enregistrer</button>
       </div>
