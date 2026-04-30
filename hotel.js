@@ -676,7 +676,8 @@ function openModalDetails(id) {
   if (!h) return;
   currentHotelId = id;
 
-  const img = h.imageData ? h.imageData : (h.image ? `${API}${h.image}` : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600');
+ // https:images.unsplash.com/photo-1566073771259-6a8506099945?w=600
+  const img = h.imageData ? h.imageData : (h.image ? `${API}${h.image}` : '');
   document.getElementById('detailPhoto').src             = img;
   document.getElementById('detailNom').textContent       = h.nom;
   document.getElementById('detailAdresse').textContent   = h.adresse || '–';
