@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="dashboard.css">
 </head>
 <body class="bg-gray-100">
-  
 
   <input type="checkbox" id="sidebar-toggle">
   <label for="sidebar-toggle" class="hamburger-btn">
@@ -18,14 +17,13 @@
   </label>
   <div class="sidebar-overlay" onclick="document.getElementById('sidebar-toggle').checked = false"></div>
 
-  <!-- SIDEBAR (design original conservé) -->
+  <!-- SIDEBAR -->
   <aside class="fixed">
     <div class="bg-[url('images/bg1.jpeg')] bg-cover bg-center w-[270px] relative h-[100vh]">
       <div class="w-[270px] h-[100vh] inset-0 bg-black/60">
 
         <div class="flex items-center gap-3 justify-center py-4">
-          <!-- <i class="fa-regular fa-bookmark text-white text-2xl"></i> -->
-            <img src="images/Link → SVG.png" alt="" class="W-4 h-6" >
+          <img src="images/Link → SVG.png" alt="" class="W-4 h-6">
           <span class="font-bold text-white text-xl tracking-wide">RED PRODUCT</span>
         </div>
 
@@ -42,7 +40,9 @@
         </div>
 
         <div class="flex gap-2 p-8 mt-[120%] border-t-[1px] border-gray-500">
-          <img id="sidebarPhoto" src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer" onclick="document.getElementById('photoInput').click()">
+          <img id="sidebarPhoto" src="images/img1.jpeg" alt="Photo"
+            class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer"
+            onclick="openModalProfil()">
           <div>
             <h1 id="userNom" class="text-white">...</h1>
             <div class="flex gap-2 p-2">
@@ -56,7 +56,7 @@
     </div>
   </aside>
 
-  <!-- HEADER (design original conservé) -->
+  <!-- HEADER -->
   <header class="fixed top-0 left-[270px] w-[calc(100vw-270px)] h-12 px-6 bg-white flex justify-between items-center z-50 shadow-sm" id="header">
     <h1 class="font-bold text-xl" id="dashboard">Dashboard</h1>
     <div class="flex gap-4 items-center">
@@ -81,8 +81,10 @@
             <p class="text-center text-gray-400 text-sm py-4">Aucune notification</p>
           </div>
         </div>
-        <!-- PHOTO PROFIL -->
-        <img id="headerPhoto" src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer" onclick="document.getElementById('photoInput').click()">
+        <!-- PHOTO PROFIL (cliquable → ouvre modal profil) -->
+        <img id="headerPhoto" src="images/img1.jpeg" alt="Photo"
+          class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer"
+          onclick="openModalProfil()">
         <!-- INPUT CACHÉ -->
         <input type="file" id="photoInput" accept="image/*" class="hidden">
         <a href="#" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
@@ -90,7 +92,7 @@
     </div>
   </header>
 
-  <!-- BIENVENUE (design original conservé) -->
+  <!-- BIENVENUE -->
   <section class="ml-[270px] pt-9" id="lorem">
     <div class="bg-white h-18 px-6 p-5">
       <h1 class="text-2xl text-gray-600">Bienvenue sur RED PRODUCT</h1>
@@ -98,7 +100,7 @@
     </div>
   </section>
 
-  <!-- CARTES STATS (design original conservé, chiffres dynamiques) -->
+  <!-- CARTES STATS -->
   <section class="ml-[270px]">
     <div class="grid grid-cols-3 gap-6 p-8 mb-[50px]" id="statsGrid">
 
@@ -165,7 +167,59 @@
     </div>
   </section>
 
+  <!-- ===== MODAL PROFIL ===== -->
+  <div id="modalProfil" class="hidden fixed inset-0 bg-black/50 z-[150] flex items-center justify-center px-4 py-6 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+      <div class="flex items-center gap-3 pb-4 mb-5 border-b border-dashed border-gray-200">
+        <button onclick="closeModalProfil()" class="text-gray-500 hover:text-black transition text-lg">←</button>
+        <h2 class="font-bold text-gray-700 tracking-wide text-sm uppercase">Mon Profil</h2>
+      </div>
+      <div id="profilMsgErr" class="hidden bg-red-50 border border-red-300 text-red-600 text-xs rounded-lg px-3 py-2 mb-4 text-center"></div>
+      <div id="profilMsgOk" class="hidden bg-green-50 border border-green-300 text-green-700 text-xs rounded-lg px-3 py-2 mb-4 text-center"></div>
+      <form id="profilForm">
+        <div class="flex flex-col items-center gap-3 mb-6">
+          <img id="profilPhotoPreview" src="" alt="Photo"
+            class="hidden w-20 h-20 rounded-full object-cover border-2 border-gray-200">
+          <label for="profilPhotoInput"
+            class="cursor-pointer text-sm text-gray-500 border border-gray-200 rounded-xl px-4 py-2 hover:bg-gray-50 transition flex items-center gap-2">
+            <i class="fa-regular fa-image"></i> Changer la photo
+          </label>
+          <input type="file" id="profilPhotoInput" accept="image/*" class="hidden">
+        </div>
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1">
+            <label class="text-sm font-medium text-gray-600">Nom</label>
+            <input type="text" id="profilNom"
+              class="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-gray-500">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-sm font-medium text-gray-600">Email</label>
+            <input type="email" id="profilEmail"
+              class="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-gray-500">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-sm font-medium text-gray-600">Nouveau mot de passe <span class="text-gray-400 font-normal">(optionnel)</span></label>
+            <input type="password" id="profilPwd" placeholder="Laisser vide pour ne pas changer"
+              class="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-gray-500">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-sm font-medium text-gray-600">Confirmer le mot de passe</label>
+            <input type="password" id="profilPwd2"
+              class="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-gray-500">
+          </div>
+        </div>
+        <div class="flex justify-end mt-6">
+          <button type="submit"
+            class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="dashboard.js"></script>
+  <script src="profil.js"></script>
 
 </body>
 </html>

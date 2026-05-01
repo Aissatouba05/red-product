@@ -1,5 +1,4 @@
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -23,8 +22,7 @@
       <div class="w-[270px] h-[100vh] inset-0 bg-black/60">
 
         <div class="flex items-center gap-3 justify-center py-4">
-          <!-- <i class="fa-regular fa-bookmark text-white text-2xl"></i> -->
-            <img src="images/Link → SVG.png" alt="" class="W-4 h-6" >
+          <img src="images/Link → SVG.png" alt="" class="W-4 h-6">
           <span class="font-bold text-white text-xl tracking-wide">RED PRODUCT</span>
         </div>
 
@@ -43,7 +41,10 @@
         </div>
 
         <div class="flex gap-2 p-8 mt-[120%] border-t-[1px] border-gray-500">
-          <img id="sidebarPhoto" src="" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer" onclick="document.getElementById('photoInput').click()">
+          <!-- onclick → ouvre modal profil -->
+          <img id="sidebarPhoto" src="" alt="Photo"
+            class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer"
+            onclick="openModalProfil()">
           <div>
             <h1 id="userNom" class="text-white">...</h1>
             <div class="flex gap-2 p-2">
@@ -82,8 +83,10 @@
             <p class="text-center text-gray-400 text-sm py-4">Aucune notification</p>
           </div>
         </div>
-        <!-- PHOTO PROFIL (cliquable) -->
-        <img id="headerPhoto" src="images/img1.jpeg" alt="Photo" class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer" onclick="document.getElementById('photoInput').click()">
+        <!-- PHOTO PROFIL → ouvre modal profil -->
+        <img id="headerPhoto" src="images/img1.jpeg" alt="Photo"
+          class="w-8 h-8 rounded-full aspect-square object-cover object-top cursor-pointer"
+          onclick="openModalProfil()">
         <!-- INPUT CACHÉ POUR CHANGER LA PHOTO -->
         <input type="file" id="photoInput" accept="image/*" class="hidden">
         <a href="#" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
@@ -123,7 +126,7 @@
       <div class="flex gap-10">
         <div class="flex flex-col gap-2 p-4">
           <label>Nom de l'hôtel</label>
-          <input id="addNom" type="text" placeholder="CAP Mamiane" class="border w-64 p-1 rounded-md text-sm ">
+          <input id="addNom" type="text" placeholder="CAP Mamiane" class="border w-64 p-1 rounded-md text-sm">
           <label>E-mail</label>
           <input id="addEmail" type="email" placeholder="information@gmail.com" class="border w-64 p-1 rounded-md text-sm">
           <label>Prix par nuit</label>
@@ -136,22 +139,21 @@
           <input id="addNumero" type="text" placeholder="+221 777 77 77" class="border w-64 p-1 rounded-md text-sm">
           <label>Devise</label>
           <select id="addDevise" class="border w-64 p-1 rounded-md text-sm">
-            <option value="XOF"  class="text-sm">F XOF</option>
-            <option value="EUR"  class="text-sm">Euro</option>
-            <option value="USD"  class="text-sm">Dollar</option>
+            <option value="XOF" class="text-sm">F XOF</option>
+            <option value="EUR" class="text-sm">Euro</option>
+            <option value="USD" class="text-sm">Dollar</option>
           </select>
         </div>
       </div>
-<div class="flex flex-col gap-2 p-3">
-  <label>Photo de l'hôtel</label>
-  <label for="addImage" class="cursor-pointer border border-gray-200 rounded-md w-full h-28 flex flex-col items-center justify-center gap-2 bg-white hover:bg-gray-50 transition">
-    <i class="fa-regular fa-image text-gray-300 text-4xl"></i>
-    <span class="text-gray-400 text-sm">Ajouter une photo</span>
-  </label>
-  <input id="addImage" type="file" accept="image/*" class="hidden">
-  <img id="addImagePreview" src="" alt="" class="hidden w-full h-32 object-cover rounded-md mt-1">
-</div>
-
+      <div class="flex flex-col gap-2 p-3">
+        <label>Photo de l'hôtel</label>
+        <label for="addImage" class="cursor-pointer border border-gray-200 rounded-md w-full h-28 flex flex-col items-center justify-center gap-2 bg-white hover:bg-gray-50 transition">
+          <i class="fa-regular fa-image text-gray-300 text-4xl"></i>
+          <span class="text-gray-400 text-sm">Ajouter une photo</span>
+        </label>
+        <input id="addImage" type="file" accept="image/*" class="hidden">
+        <img id="addImagePreview" src="" alt="" class="hidden w-full h-32 object-cover rounded-md mt-1">
+      </div>
       <div class="ml-[79%] mt-2">
         <button id="saveHotelBtn" class="p-2 px-5 bg-gray-600 text-white rounded-xl">Enregistrer</button>
       </div>
@@ -189,7 +191,6 @@
           <span class="text-[12px] text-[#AAAAAA] font-medium">Prix</span>
           <span id="detailPrix" class="text-[15px] text-[#8D4B38] font-semibold"></span>
         </div>
-       
       </div>
       <div class="flex justify-end gap-3 mt-6">
         <button id="btnSupprimerDetail"
@@ -245,7 +246,6 @@
             </select>
           </div>
         </div>
-       
         <div class="flex justify-end mt-6">
           <button type="submit" class="bg-[#333333] text-white px-8 py-3 rounded-xl text-[15px] font-medium hover:bg-[#555555] transition">
             Enregistrer
@@ -256,8 +256,60 @@
   </div>
 
 
-<script src="hotel.js"></script>
+  <!-- ===== MODAL PROFIL ===== -->
+  <div id="modalProfil" class="hidden fixed inset-0 bg-black/50 z-[150] flex items-center justify-center px-4 py-6 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+      <div class="flex items-center gap-3 pb-4 mb-5 border-b border-dashed border-gray-200">
+        <button onclick="closeModalProfil()" class="text-gray-500 hover:text-black transition text-lg">←</button>
+        <h2 class="font-bold text-gray-700 tracking-wide text-sm uppercase">Mon Profil</h2>
+      </div>
+      <div id="profilMsgErr" class="hidden bg-red-50 border border-red-300 text-red-600 text-xs rounded-lg px-3 py-2 mb-4 text-center"></div>
+      <div id="profilMsgOk" class="hidden bg-green-50 border border-green-300 text-green-700 text-xs rounded-lg px-3 py-2 mb-4 text-center"></div>
+      <form id="profilForm">
+        <div class="flex flex-col items-center gap-3 mb-6">
+          <img id="profilPhotoPreview" src="" alt="Photo"
+            class="hidden w-20 h-20 rounded-full object-cover border-2 border-gray-200">
+          <label for="profilPhotoInput"
+            class="cursor-pointer text-sm text-gray-500 border border-gray-200 rounded-xl px-4 py-2 hover:bg-gray-50 transition flex items-center gap-2">
+            <i class="fa-regular fa-image"></i> Changer la photo
+          </label>
+          <input type="file" id="profilPhotoInput" accept="image/*" class="hidden">
+        </div>
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1">
+            <label class="text-sm font-medium text-gray-600">Nom</label>
+            <input type="text" id="profilNom"
+              class="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-gray-500">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-sm font-medium text-gray-600">Email</label>
+            <input type="email" id="profilEmail"
+              class="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-gray-500">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-sm font-medium text-gray-600">Nouveau mot de passe <span class="text-gray-400 font-normal">(optionnel)</span></label>
+            <input type="password" id="profilPwd" placeholder="Laisser vide pour ne pas changer"
+              class="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-gray-500">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-sm font-medium text-gray-600">Confirmer le mot de passe</label>
+            <input type="password" id="profilPwd2"
+              class="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-gray-500">
+          </div>
+        </div>
+        <div class="flex justify-end mt-6">
+          <button type="submit"
+            class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <script src="hotel.js"></script>
+  <script src="profil.js"></script>
 
 </body>
 </html>
-
