@@ -219,8 +219,8 @@
 
   /* ── Modal responsive ── */
   #modal > div {
-    width: 95vw;
-    max-height: 90vh;
+    width: 88vw;
+    max-height: 80vh;
     overflow-y: auto;
     padding: 16px;
   }
@@ -239,14 +239,11 @@
     width: 100% !important;
   }
   #enrgistrer{
-  margin-left: 0%;
-  }
-
-  /* #modal .ml-\[70\%\] {
     margin-left: 0;
     display: flex;
     justify-content: flex-end;
-  } */
+  
+  }
 }
 
 
