@@ -487,6 +487,48 @@ const authToken = localStorage.getItem('token');
 if (!authToken) window.location.href = 'index.html';
 const authHeaders = { Authorization: `Bearer ${authToken}` };
 
+// ---- TOAST ----
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${type === 'success' ? '#22c55e' : '#ef4444'};
+    color: white;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 9999;
+    animation: fadeInDown 0.3s ease;
+  `;
+  if (!document.getElementById('toast-style')) {
+    const style = document.createElement('style');
+    style.id = 'toast-style';
+    style.textContent = `
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
+}
+
+// ---- IMAGE URL ----
+// Gère les URLs Cloudinary (complètes) et les anciens chemins locaux
+function getImageUrl(image) {
+  if (!image) return 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400';
+  if (image.startsWith('http')) return image; // URL Cloudinary complète
+  return `${API}${image}`; // Ancien chemin local
+}
+
 // ---- PERSISTANCE LOCALE PAR UTILISATEUR ----
 function getLocalKey() {
   const userId = localStorage.getItem('userId') || 'guest';
@@ -521,9 +563,7 @@ function renderHotels(list) {
     card.className = 'hotel-card bg-white rounded-2xl shadow-md w-full overflow-hidden cursor-pointer transition hover:-translate-y-1';
     card.dataset.id = h.id;
 
-    const img = h.imageData
-      ? h.imageData
-      : (h.image ? `${API}${h.image}` : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400');
+    const img = h.imageData ? h.imageData : getImageUrl(h.image);
 
     card.innerHTML = `
       <img src="${img}" alt="${h.nom}"
@@ -549,17 +589,12 @@ async function loadHotels(page = 1) {
     const res = await fetch(`${API}/api/hotels?page=${page}&limit=${limit}`, { headers: authHeaders });
     if (!res.ok) throw new Error();
     const data = await res.json();
-
-    // Le serveur retourne maintenant toujours {hotels, total, page, totalPages}
     hotels = (data.hotels || []).map(h => ({ ...h, id: h._id || h.id || generateId() }));
-
-    // ✅ On écrase le localStorage avec les vraies données du serveur
     saveLocal();
     renderHotels(hotels);
     renderPagination(data.page, data.totalPages);
   } catch (err) {
     console.error('Erreur loadHotels:', err);
-    // Serveur absent → fallback localStorage
     hotels = loadLocal();
     renderHotels(hotels);
   }
@@ -652,6 +687,7 @@ saveBtn.addEventListener('click', async () => {
       modal.classList.add('hidden');
       resetAddForm();
       await loadHotels(currentPage);
+      showToast('🏨 Hôtel ajouté avec succès !', 'success');
       addNotif(`🏨 Hôtel "${nom}" ajouté avec succès !`);
     } else {
       const err = await res.json();
@@ -676,8 +712,7 @@ function openModalDetails(id) {
   if (!h) return;
   currentHotelId = id;
 
- // https:images.unsplash.com/photo-1566073771259-6a8506099945?w=600
-  const img = h.imageData ? h.imageData : (h.image ? `${API}${h.image}` : '');
+  const img = h.imageData ? h.imageData : getImageUrl(h.image);
   document.getElementById('detailPhoto').src             = img;
   document.getElementById('detailNom').textContent       = h.nom;
   document.getElementById('detailAdresse').textContent   = h.adresse || '–';
@@ -704,12 +739,12 @@ document.getElementById('btnSupprimerDetail').addEventListener('click', async ()
     if (res.ok) {
       closeModalDetails();
       await loadHotels(currentPage);
+      showToast('🗑️ Hôtel supprimé !', 'success');
       addNotif('🗑️ Hôtel supprimé avec succès !');
     } else {
       alert("Erreur lors de la suppression");
     }
   } catch {
-    // Fallback local
     hotels = hotels.filter(h => h.id !== currentHotelId);
     saveLocal();
     renderHotels(hotels);
@@ -757,6 +792,7 @@ document.getElementById('editForm').addEventListener('submit', async e => {
       closeModalModifier();
       closeModalDetails();
       await loadHotels(currentPage);
+      showToast('✏️ Hôtel modifié avec succès !', 'success');
       addNotif('✏️ Hôtel modifié avec succès !');
     } else {
       alert("Erreur lors de la modification");
@@ -868,7 +904,7 @@ async function loadUserPhoto() {
     const res = await fetch(`${API}/api/auth/me`, { headers: authHeaders });
     const user = await res.json();
     if (user.photo) {
-      const photoUrl = `${API}${user.photo}`;
+      const photoUrl = user.photo.startsWith('http') ? user.photo : `${API}${user.photo}`;
       document.getElementById('headerPhoto').src  = photoUrl;
       document.getElementById('sidebarPhoto').src = photoUrl;
       localStorage.setItem('redproduct_photo', photoUrl);
@@ -905,9 +941,11 @@ document.getElementById('photoInput').addEventListener('change', async function 
       document.getElementById('headerPhoto').src  = photoUrl;
       document.getElementById('sidebarPhoto').src = photoUrl;
       localStorage.setItem('redproduct_photo', photoUrl);
+      showToast('📸 Photo mise à jour !', 'success');
       addNotif('📸 Photo de profil mise à jour !');
     } else {
-      alert('Erreur lors du changement de photo');
+      const err = await res.json();
+      alert(err.error || 'Erreur lors du changement de photo');
     }
   } catch {
     const reader = new FileReader();
@@ -931,6 +969,7 @@ async function logout() {
   localStorage.removeItem('token');
   localStorage.removeItem('userNom');
   localStorage.removeItem('userId');
+  localStorage.removeItem('redproduct_photo');
   window.location = 'index.html';
 }
 
