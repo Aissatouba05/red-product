@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RED PRODUCT — Activation</title>
+  <link rel="icon" type="image/png" href="images/Link → SVG.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="bg-[url('images/bg1.jpeg')] bg-gray-800 bg-cover bg-center min-h-screen flex items-center justify-center relative">
+    <div class="absolute inset-0 bg-black/65"></div>
+
+    <div class="relative z-10 flex flex-col items-center gap-6">
+
+      <div class="flex items-center gap-3">
+        <img src="images/Link → SVG.png" alt="" class="W-4 h-6">
+        <span class="font-bold text-white text-2xl tracking-wide">RED PRODUCT</span>
+      </div>
+
+      <div class="bg-white rounded-sm shadow-2xl w-80 px-4 py-7 text-center">
+
+        <!-- Loading -->
+        <div id="stateLoading">
+          <i class="fa-solid fa-spinner fa-spin text-3xl text-gray-400 mb-4"></i>
+          <p class="text-sm text-gray-600">Activation en cours...</p>
+        </div>
+
+        <!-- Succès -->
+        <div id="stateSuccess" class="hidden">
+          <i class="fa-solid fa-circle-check text-4xl text-green-500 mb-4"></i>
+          <h2 class="font-bold text-gray-800 text-lg mb-2">Compte activé !</h2>
+          <p class="text-sm text-gray-500 mb-6">Votre compte a été activé avec succès. Vous pouvez maintenant vous connecter.</p>
+          <a href="index.html"
+            class="bg-gray-700 hover:bg-black text-white text-sm py-3 px-6 rounded-lg transition-all duration-200 inline-block">
+            Se connecter
+          </a>
+        </div>
+
+        <!-- Erreur -->
+        <div id="stateError" class="hidden">
+          <i class="fa-solid fa-circle-xmark text-4xl text-red-500 mb-4"></i>
+          <h2 class="font-bold text-gray-800 text-lg mb-2">Lien invalide</h2>
+          <p id="errorMsg" class="text-sm text-gray-500 mb-4">Ce lien est invalide ou a expiré.</p>
+
+          <!-- Renvoyer email -->
+          <div class="mt-4">
+            <p class="text-sm text-gray-500 mb-2">Renvoyer l'email d'activation :</p>
+            <div class="flex items-center gap-2 border-b border-gray-200 pb-2 mb-3">
+              <input id="resendEmail" type="email" placeholder="Votre e-mail"
+                class="flex-1 bg-transparent outline-none text-sm text-gray-800 placeholder-gray-400">
+            </div>
+            <div id="resendMsg" class="hidden text-xs text-green-600 mb-2"></div>
+            <button onclick="resendActivation()"
+              class="bg-gray-700 hover:bg-black text-white text-sm py-2 px-5 rounded-lg transition w-full">
+              Renvoyer
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <a href="index.html" class="text-yellow-500 text-[15px] font-bold">← Retour à la connexion</a>
+    </div>
+  </div>
+
+<script src="activation.js"></script>
+</body>
+</html>

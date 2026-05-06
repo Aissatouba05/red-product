@@ -1,5 +1,4 @@
 
-
 // const API = "https://red-product-back-jtx4.onrender.com";
 // const API_BASE = `${API}/api/auth`;
 
@@ -16,7 +15,24 @@
 //       localStorage.setItem("token", data.token);
 //       localStorage.setItem("userNom", data.user.nom || data.user.email);
 //       localStorage.setItem("userId", data.user.id);
-//       window.location = "dashboard.html";
+
+//       // ✅ Charger la photo de profil depuis le backend dès la connexion
+//       try {
+//         const meRes = await fetch(`${API_BASE}/me`, {
+//           headers: { Authorization: `Bearer ${data.token}` }
+//         });
+//         const user = await meRes.json();
+//         if (user.photo) {
+//           const photoUrl = user.photo.startsWith('http') ? user.photo : `${API}${user.photo}`;
+//           localStorage.setItem("redproduct_photo", photoUrl);
+//         } else {
+//           localStorage.removeItem("redproduct_photo");
+//         }
+//       } catch { /* pas grave */ }
+
+//       // ✅ Afficher toast succès avant redirection
+//       showToast("Connexion réussie ✅", "success");
+//       setTimeout(() => { window.location = "dashboard.html"; }, 1500);
 //     } else {
 //       alert(data.error || "Identifiants incorrects");
 //     }
@@ -96,10 +112,50 @@
 //       headers: { Authorization: `Bearer ${token}` }
 //     });
 //   } catch { /* serveur absent */ }
+//   // ✅ Vider tout le localStorage sauf la photo n'est pas supprimée
+//   // car elle sera rechargée depuis le backend au prochain login
 //   localStorage.removeItem("token");
 //   localStorage.removeItem("userNom");
 //   localStorage.removeItem("userId");
+//   localStorage.removeItem("redproduct_photo"); // ← supprimée aussi, rechargée au login
 //   window.location = "index.html";
+// }
+
+// // ========= TOAST NOTIFICATION =========
+// function showToast(message, type = "success") {
+//   const toast = document.createElement("div");
+//   toast.textContent = message;
+//   toast.style.cssText = `
+//     position: fixed;
+//     top: 24px;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     background: ${type === "success" ? "#22c55e" : "#ef4444"};
+//     color: white;
+//     padding: 12px 28px;
+//     border-radius: 12px;
+//     font-size: 15px;
+//     font-weight: 600;
+//     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+//     z-index: 9999;
+//     animation: fadeInDown 0.3s ease;
+//   `;
+
+//   // Ajouter animation CSS
+//   if (!document.getElementById("toast-style")) {
+//     const style = document.createElement("style");
+//     style.id = "toast-style";
+//     style.textContent = `
+//       @keyframes fadeInDown {
+//         from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+//         to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+//       }
+//     `;
+//     document.head.appendChild(style);
+//   }
+
+//   document.body.appendChild(toast);
+//   setTimeout(() => toast.remove(), 1400);
 // }
 
 // // ========= AFFICHER NOM UTILISATEUR =========
@@ -118,6 +174,10 @@
 //       userNomElement.textContent = nom;
 //       localStorage.setItem("userNom", nom);
 //       localStorage.setItem("userId", user._id || user.id);
+//       // ✅ Mettre à jour la photo à chaque chargement de page
+//       if (user.photo) {
+//         localStorage.setItem("redproduct_photo", `${API}${user.photo}`);
+//       }
 //     })
 //     .catch(() => {
 //       userNomElement.textContent = nomLocal || "Utilisateur";
@@ -126,7 +186,51 @@
 // }
 
 
+    const API = 'https://red-product-back-jtx4.onrender.com';
 
+    async function handleRegister() {
+      const nom   = document.getElementById('nom').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const pwd   = document.getElementById('pwd').value;
+      const btn   = document.getElementById('submitBtn');
+      const msgOk  = document.getElementById('msgSuccess');
+      const msgErr = document.getElementById('msgError');
+
+      msgOk.classList.add('hidden');
+      msgErr.classList.add('hidden');
+
+      btn.textContent = 'Inscription...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API}/api/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nom, email, password: pwd })
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          msgOk.textContent = '✅ Inscription réussie ! Vérifiez votre email pour activer votre compte.';
+          msgOk.classList.remove('hidden');
+          document.getElementById('nom').value   = '';
+          document.getElementById('email').value = '';
+          document.getElementById('pwd').value   = '';
+        } else {
+          msgErr.textContent = data.error || "Erreur lors de l'inscription.";
+          msgErr.classList.remove('hidden');
+        }
+      } catch {
+        msgErr.textContent = 'Erreur réseau / serveur.';
+        msgErr.classList.remove('hidden');
+      }
+
+      btn.textContent = "S'inscrire";
+      btn.disabled = false;
+    }
+
+
+    
 const API = "https://red-product-back-jtx4.onrender.com";
 const API_BASE = `${API}/api/auth`;
 
@@ -161,6 +265,9 @@ async function login(email, password) {
       // ✅ Afficher toast succès avant redirection
       showToast("Connexion réussie ✅", "success");
       setTimeout(() => { window.location = "dashboard.html"; }, 1500);
+    } else if (res.status === 403) {
+      // Compte non activé
+      alert("⚠️ Compte non activé. Vérifiez votre email ou allez sur la page d'activation.");
     } else {
       alert(data.error || "Identifiants incorrects");
     }
