@@ -186,12 +186,57 @@
 // }
 
 
-    
-const API = "https://red-product-back-jtx4.onrender.com";
+const API = 'https://red-product-back-jtx4.onrender.com';
 const API_BASE = `${API}/api/auth`;
+
+// ========= REGISTER =========
+async function handleRegister() {
+  const nom    = document.getElementById('nom').value.trim();
+  const email  = document.getElementById('email').value.trim();
+  const pwd    = document.getElementById('pwd').value;
+  const btn    = document.getElementById('submitBtn');
+  const msgOk  = document.getElementById('msgSuccess');
+  const msgErr = document.getElementById('msgError');
+
+  msgOk.classList.add('hidden');
+  msgErr.classList.add('hidden');
+
+  btn.textContent = 'Inscription en cours...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(`${API_BASE}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nom, email, password: pwd })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      msgOk.textContent = '✅ Inscription réussie ! Vérifiez votre email pour activer votre compte.';
+      msgOk.classList.remove('hidden');
+      document.getElementById('nom').value   = '';
+      document.getElementById('email').value = '';
+      document.getElementById('pwd').value   = '';
+    } else {
+      msgErr.textContent = data.error || "Erreur lors de l'inscription.";
+      msgErr.classList.remove('hidden');
+    }
+  } catch {
+    msgErr.textContent = 'Erreur réseau / serveur.';
+    msgErr.classList.remove('hidden');
+  }
+
+  btn.textContent = "S'inscrire";
+  btn.disabled = false;
+}
 
 // ========= LOGIN =========
 async function login(email, password) {
+  const btn = document.getElementById('loginBtn');
+  btn.textContent = 'Connexion en cours...';
+  btn.disabled = true;
+
   try {
     const res = await fetch(`${API_BASE}/login`, {
       method: "POST",
@@ -199,6 +244,7 @@ async function login(email, password) {
       body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
+
     if (res.ok) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("userNom", data.user.nom || data.user.email);
@@ -218,37 +264,22 @@ async function login(email, password) {
         }
       } catch { /* pas grave */ }
 
-      // ✅ Afficher toast succès avant redirection
       showToast("Connexion réussie ✅", "success");
       setTimeout(() => { window.location = "dashboard.html"; }, 1500);
+
     } else if (res.status === 403) {
-      // Compte non activé
       alert("⚠️ Compte non activé. Vérifiez votre email ou allez sur la page d'activation.");
+      btn.textContent = 'Se connecter';
+      btn.disabled = false;
     } else {
       alert(data.error || "Identifiants incorrects");
+      btn.textContent = 'Se connecter';
+      btn.disabled = false;
     }
   } catch {
     alert("Erreur réseau / serveur");
-  }
-}
-
-// ========= REGISTER =========
-async function register(email, password, nom) {
-  try {
-    const res = await fetch(`${API_BASE}/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, nom }),
-    });
-    const data = await res.json();
-    if (res.ok) {
-      alert("Inscription réussie, connectez-vous");
-      window.location = "index.html";
-    } else {
-      alert(data.error || "Erreur d'inscription");
-    }
-  } catch {
-    alert("Erreur réseau / serveur");
+    btn.textContent = 'Se connecter';
+    btn.disabled = false;
   }
 }
 
@@ -303,12 +334,10 @@ async function logout() {
       headers: { Authorization: `Bearer ${token}` }
     });
   } catch { /* serveur absent */ }
-  // ✅ Vider tout le localStorage sauf la photo n'est pas supprimée
-  // car elle sera rechargée depuis le backend au prochain login
   localStorage.removeItem("token");
   localStorage.removeItem("userNom");
   localStorage.removeItem("userId");
-  localStorage.removeItem("redproduct_photo"); // ← supprimée aussi, rechargée au login
+  localStorage.removeItem("redproduct_photo");
   window.location = "index.html";
 }
 
@@ -332,7 +361,6 @@ function showToast(message, type = "success") {
     animation: fadeInDown 0.3s ease;
   `;
 
-  // Ajouter animation CSS
   if (!document.getElementById("toast-style")) {
     const style = document.createElement("style");
     style.id = "toast-style";
@@ -365,7 +393,6 @@ if (userNomElement) {
       userNomElement.textContent = nom;
       localStorage.setItem("userNom", nom);
       localStorage.setItem("userId", user._id || user.id);
-      // ✅ Mettre à jour la photo à chaque chargement de page
       if (user.photo) {
         localStorage.setItem("redproduct_photo", `${API}${user.photo}`);
       }
