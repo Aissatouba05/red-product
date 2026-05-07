@@ -1,4 +1,5 @@
-    const API = 'https://red-product-back-jtx4.onrender.com';
+   const API = 'https://red-product-back-jtx4.onrender.com';
+    // ✅ Récupérer le token correctement depuis l'URL
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
 
@@ -7,9 +8,9 @@
         showError('Aucun token trouvé dans l\'URL.');
         return;
       }
-X
+
       try {
-        const res = await fetch(`${API}/api/auth/activate?token=${token}`);
+        const res = await fetch(`${API}/api/auth/activate?token=${encodeURIComponent(token)}`);
         const data = await res.json();
 
         if (res.ok) {
