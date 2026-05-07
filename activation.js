@@ -8,14 +8,22 @@ async function activateAccount() {
     return;
   }
 
+  // Affiche un message d'attente après 5 secondes
+  const loadingMsg = document.querySelector('#stateLoading p');
+  const wakeTimer = setTimeout(() => {
+    loadingMsg.textContent = '⏳ Le serveur se réveille, encore quelques secondes...';
+  }, 5000);
+
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000); // 15 secondes max
+    const timeout = setTimeout(() => controller.abort(), 60000); // 60 secondes
 
     const res = await fetch(`${API}/api/auth/activate?token=${token}`, {
       signal: controller.signal
     });
+
     clearTimeout(timeout);
+    clearTimeout(wakeTimer);
 
     const data = await res.json();
 
@@ -26,10 +34,11 @@ async function activateAccount() {
       showError(data.error || 'Lien invalide ou expiré.');
     }
   } catch (err) {
+    clearTimeout(wakeTimer);
     if (err.name === 'AbortError') {
-      showError('Le serveur met trop de temps à répondre. Réessayez dans 1 minute.');
+      showError('Le serveur ne répond pas. Réessayez dans 1 minute.');
     } else {
-      showError('Erreur réseau / serveur.');
+      showError('Erreur réseau. Vérifiez votre connexion et réessayez.');
     }
   }
 }
